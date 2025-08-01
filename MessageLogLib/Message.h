@@ -2,7 +2,7 @@
 #define MESSAGE_H
 
 #include <ctime>
-#include <string>
+#include <cstring>
 #include <ostream>
 
 enum class Importance {Low, Medium, High};

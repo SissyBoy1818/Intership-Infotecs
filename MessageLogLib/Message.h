@@ -24,5 +24,6 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& os, const Message &msg);
+Importance stringToImportance(char *str);
 
 #endif // MESSAGE_H

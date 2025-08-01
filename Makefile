@@ -1,12 +1,17 @@
-CC=gcc
-SOURCES=MessageLogLib/Journal.cpp MessageLogLib/Journal.h MessageLogLib/Message.cpp MessageLogLib/Message.h
-OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=hello
+CXX = g++
+CXXFLAGS = -Wall -std=c++17 -fPIC
+SRC_DIR = MessageLogLib
+SOURCES = $(SRC_DIR)/Journal.cpp $(SRC_DIR)/Message.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
+SHARED_LIB = libmessagelog.so
 
-all: $(SOURCES) $(EXECUTABLE)
+all: $(SHARED_LIB)
 
-$(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(OBJECTS) -o $@
+$(SHARED_LIB): $(OBJECTS)
+	$(CXX) -shared -o $(SHARED_LIB) $(OBJECTS)
 
-.cpp.o:
-	$(CC) $(CFLAGS) -c $< -o $@
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/%.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(SRC_DIR)/*.o *.o $(SHARED_LIB)

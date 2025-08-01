@@ -3,6 +3,7 @@
 
 #include <ctime>
 #include <string>
+#include <ostream>
 
 enum class Importance {Low, Medium, High};
 
@@ -16,6 +17,12 @@ private:
 public:
     Message(std::string data, Importance importance);
     ~Message() = default;
+
+    std::string getData() const;
+    time_t getCreationTime() const;
+    Importance getImportance() const;
 };
+
+std::ostream& operator<<(std::ostream& os, const Message &msg);
 
 #endif // MESSAGE_H

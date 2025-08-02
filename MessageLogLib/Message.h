@@ -16,11 +16,16 @@ private:
 
 public:
     Message(std::string data, Importance importance);
+    Message() = default;
     ~Message() = default;
 
     std::string getData() const;
     time_t getCreationTime() const;
     Importance getImportance() const;
+
+    void setData(std::string newData);
+    void setImportance(Importance newImportance);
+    void setCurrentTime();
 };
 
 std::ostream& operator<<(std::ostream& os, const Message &msg);

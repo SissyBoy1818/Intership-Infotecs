@@ -18,11 +18,23 @@ Importance Message::getImportance() const{
     return _importance;
 }
 
+void Message::setData(std::string newData) {
+    _data = newData;
+}
+
+void Message::setImportance(Importance newImportance) {
+    _importance = newImportance;
+}
+
+void Message::setCurrentTime() {
+    time(&_creationTime);
+}
+
 std::ostream &operator<<(std::ostream &os, const Message &msg)
 {
     time_t creationTime = msg.getCreationTime();
     tm *tm = localtime(&creationTime);
-    char *buffer = new char[32]{'\0'};
+    char buffer[32]{'\0'};
 
     std::strftime(buffer, 32, "%d.%m.%Y %H:%M:%S", tm);
 

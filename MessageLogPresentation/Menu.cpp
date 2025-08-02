@@ -8,10 +8,14 @@ void Menu::printMenu() const
     std::cout <<  "Menu\n";
 }
 
-void Menu::handleControllers()
+bool Menu::handleControllers()
 {
+    int a;
+    std::cin >> a;
+    if (a==0) return false;
    // make something
    createMessage();
+   return true;
 }
 
 void Menu::createMessage()
@@ -24,12 +28,12 @@ void Menu::createMessage()
     sendMessage(content, importance);
 }
 
-void Menu::sendMessage(std::string a, std::string b)
+void Menu::sendMessage(std::string data, std::string importance)
 {
     Importance imp;
     try {
-        imp = stringToImportance(b.c_str());
-        _journal.addLogEntry(Message(a,imp));
+        imp = stringToImportance(importance.c_str());
+        _journal.addLogEntry(Message(data,imp));
     } catch(const std::invalid_argument& e) {
         std::cerr << e.what() << '\n';
     }

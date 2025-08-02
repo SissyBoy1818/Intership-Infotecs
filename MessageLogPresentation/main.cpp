@@ -13,14 +13,16 @@ int main(int argc, char* argv[])
 	try {
 		imp = stringToImportance(argv[2]);
 	} catch(const std::invalid_argument& e) {
-		std::cout << e.what() << '\n';
+		std::cerr << e.what() << '\n';
 		return 1;
 	}
 
 	Journal j(argv[1], imp);
 	Menu menu(j);
-	menu.printMenu();
-	menu.handleControllers();
+
+	do{
+		menu.printMenu();
+	} while (menu.handleControllers());
 
 	return 0;
 }

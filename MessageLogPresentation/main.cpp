@@ -24,5 +24,6 @@ int main(int argc, char* argv[])
 		menu.printMenu();
 	} while (menu.handleControllers());
 
+	menu.stop();
 	return 0;
 }

@@ -11,5 +11,6 @@ void Journal::setDefaultImportance(Importance newDefaultImportance)
 
 void Journal::addLogEntry(const Message &msg)
 {
-    _logFile << msg;
+    if (static_cast<int>(msg.getImportance()) >= static_cast<int>(_importanceByDefault))
+        _logFile << msg;
 }

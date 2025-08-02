@@ -45,11 +45,11 @@ std::ostream &operator<<(std::ostream &os, const Message &msg)
     return os;
 }
 
-Importance stringToImportance(char *str)
+Importance stringToImportance(const char *str)
 {
-    if (strcmp(str,"low")) return Importance::Low;
-    if (strcmp(str,"medium")) return Importance::Medium;
-    if (strcmp(str,"high")) return Importance::High;
+    if (strcmp(str,"low")==0) return Importance::Low;
+    if (strcmp(str,"medium")==0) return Importance::Medium;
+    if (strcmp(str,"high")==0) return Importance::High;
     throw std::invalid_argument("Unkown importance: " + std::string(str));
 }
     

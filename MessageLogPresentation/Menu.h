@@ -3,14 +3,23 @@
 
 #include <iostream>
 #include <thread>
+#include <atomic>
 #include <condition_variable>
 #include "Journal.h"
 
 class Menu
 {
 private:
-    Journal &_journal;
+    Journal& _journal;
+    Message* _lastMessage;
+
     std::thread _sendingThread;
+    std::condition_variable _cv;
+    std::mutex _sendingMutex;
+    std::atomic<bool> _running;
+
+    void createMessage();
+    void sendMessage();
 
 public:
     Menu(Journal &journal);
@@ -18,8 +27,8 @@ public:
 
     void printMenu() const;
     bool handleControllers();
-    void createMessage();
-    void sendMessage(std::string data, std::string importance);
+
+    void stop();
 };
 
 #endif // MENU_H

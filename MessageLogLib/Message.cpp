@@ -65,6 +65,8 @@ std::string importanceToString(const Importance &imp)
     case Importance::High:
         return "high";
         break;
+    case Importance::Default:
+        break;
     }
 
     return "";

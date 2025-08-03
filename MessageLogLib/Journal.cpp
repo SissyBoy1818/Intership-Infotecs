@@ -5,17 +5,10 @@ Journal::Journal(const std::string fileName, const Importance importanceByDefaul
 {
 	if (!_logFile.is_open())
 		throw std::invalid_argument("Cannot open file " + fileName);
-
-	_lines = std::count(std::istreambuf_iterator<char>(_logFile), 
-						std::istreambuf_iterator<char>(), '\n');
 }
 
 std::fstream &Journal::getFileStream() {
 	return _logFile;
-}
-
-int Journal::getLines() const {
-	return _lines;
 }
 
 void Journal::setDefaultImportance(const Importance newDefaultImportance) {
@@ -29,7 +22,8 @@ void Journal::addLogEntry(Message &msg)
 	if (msg.getImportance() >= _importanceByDefault)
 	{   
 		std::lock_guard lock(m);
-		_logFile << '#' << ++_lines << ' ' <<  msg << '\n';
+		_logFile.seekp(0, _logFile.end);
+		_logFile <<  msg << '\n';
 		_logFile.flush();
 	}
 }

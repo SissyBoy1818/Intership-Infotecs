@@ -11,7 +11,6 @@ class Journal
 {
 private:
     std::fstream _logFile;
-    int _lines;
     Importance _importanceByDefault;
     std::mutex m;
 
@@ -20,7 +19,6 @@ public:
     ~Journal() = default;
     
     std::fstream& getFileStream();
-    int getLines() const;
     void setDefaultImportance(const Importance newDefaultImportance); // Изменить уровень важности сообщения по умолчанию
     void addLogEntry(Message &msg); // Записать новое сообщение в журнал
 };

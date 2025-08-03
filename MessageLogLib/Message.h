@@ -5,7 +5,7 @@
 #include <cstring>
 #include <ostream>
 
-enum class Importance {Low, Medium, High};
+enum class Importance {Low, Medium, High, Default};
 
 class Message
 {
@@ -23,12 +23,13 @@ public:
     time_t getCreationTime() const;
     Importance getImportance() const;
 
-    void setData(std::string newData);
-    void setImportance(Importance newImportance);
+    void setData(const std::string newData);
+    void setImportance(const Importance newImportance);
     void setCurrentTime();
 };
 
 std::ostream& operator<<(std::ostream& os, const Message &msg);
 Importance stringToImportance(const char *str);
+std::string importanceToString(const Importance& imp);
 
 #endif // MESSAGE_H

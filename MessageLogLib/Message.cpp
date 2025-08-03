@@ -18,11 +18,11 @@ Importance Message::getImportance() const{
     return _importance;
 }
 
-void Message::setData(std::string newData) {
+void Message::setData(const std::string newData) {
     _data = newData;
 }
 
-void Message::setImportance(Importance newImportance) {
+void Message::setImportance(const Importance newImportance) {
     _importance = newImportance;
 }
 
@@ -38,21 +38,7 @@ std::ostream &operator<<(std::ostream &os, const Message &msg)
 
     std::strftime(buffer, 32, "%d.%m.%Y %H:%M:%S", tm);
 
-    std::string importance;
-    switch (msg.getImportance())
-    {
-    case Importance::Low:
-        importance = "Low";
-        break;
-    case Importance::Medium:
-        importance = "Medium";
-        break;
-    case Importance::High:
-        importance = "High";
-        break;
-    }
-
-    os << buffer << "| " << importance << ": " << msg.getData();
+    os << buffer << "| " << importanceToString(msg.getImportance()) << ": " << msg.getData();
 
     return os;
 }
@@ -62,6 +48,24 @@ Importance stringToImportance(const char *str)
     if (strcmp(str,"low")==0) return Importance::Low;
     if (strcmp(str,"medium")==0) return Importance::Medium;
     if (strcmp(str,"high")==0) return Importance::High;
+    if (strlen(str)==0) return Importance::Default;
     throw std::invalid_argument("Unkown importance: " + std::string(str));
 }
-    
+
+std::string importanceToString(const Importance &imp)
+{
+    switch (imp)
+    {
+    case Importance::Low:
+        return "low";
+        break;
+    case Importance::Medium:
+        return "medium";
+        break;
+    case Importance::High:
+        return "high";
+        break;
+    }
+
+    return "";
+}

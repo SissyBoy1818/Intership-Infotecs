@@ -2,20 +2,27 @@
 #define JOURNAL_H
 
 #include <fstream>
+#include <mutex>
+#include <algorithm>
+#include <vector>
 #include "Message.h"
 
 class Journal
 {
 private:
-    std::ofstream _logFile;
+    std::fstream _logFile;
+    int _lines;
     Importance _importanceByDefault;
+    std::mutex m;
 
 public:
-    Journal(std::string fileName, Importance importanceByDefault);
+    Journal(const std::string fileName, const Importance importanceByDefault);
     ~Journal() = default;
     
-    void setDefaultImportance(Importance newDefaultImportance); // Изменить уровень важности сообщения по умолчанию
-    void addLogEntry(const Message &msg); // Записать новое сообщение в журнал
+    std::fstream& getFileStream();
+    int getLines() const;
+    void setDefaultImportance(const Importance newDefaultImportance); // Изменить уровень важности сообщения по умолчанию
+    void addLogEntry(Message &msg); // Записать новое сообщение в журнал
 };
 
 #endif // JOURNAL_H

@@ -1,10 +1,9 @@
 #include <iostream>
-#include "Journal.h"
 #include "Menu.h"
 
 int main(int argc, char* argv[])
 {
-	if (argc < 3) {
+	if (argc != 3) {
 		std::cerr << "Usage: " << argv[0] << " <journal_file> <default_importance>" << std::endl;
 		return 1;
 	}
@@ -24,6 +23,5 @@ int main(int argc, char* argv[])
 		menu.printMenu();
 	} while (menu.handleControllers());
 
-	menu.stop();
 	return 0;
 }

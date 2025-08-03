@@ -1,22 +1,35 @@
 #include "Journal.h"
 
-Journal::Journal(std::string fileName, Importance importanceByDefault)
-    : _logFile(fileName), _importanceByDefault(importanceByDefault)
+Journal::Journal(const std::string fileName, const Importance importanceByDefault)
+    : _logFile(fileName, std::ios::in | std::ios::out | std::ios::binary), _importanceByDefault(importanceByDefault)
 {
     if (!_logFile.is_open())
-        throw std::exception();
+        throw std::invalid_argument("Cannot open file " + fileName);
+
+    _lines = std::count(std::istreambuf_iterator<char>(_logFile), 
+                        std::istreambuf_iterator<char>(), '\n');
 }
 
-void Journal::setDefaultImportance(Importance newDefaultImportance)
-{
+std::fstream &Journal::getFileStream() {
+    return _logFile;
+}
+
+int Journal::getLines() const {
+    return _lines;
+}
+
+void Journal::setDefaultImportance(const Importance newDefaultImportance) {
     _importanceByDefault = newDefaultImportance;
 }
 
-void Journal::addLogEntry(const Message &msg)
+void Journal::addLogEntry(Message &msg)
 {
-    if (static_cast<int>(msg.getImportance()) >= static_cast<int>(_importanceByDefault))
-    {
-        _logFile << msg << '\n';
+    if (msg.getImportance() == Importance::Default)
+        msg.setImportance(_importanceByDefault);
+    if (msg.getImportance() >= _importanceByDefault)
+    {   
+        std::lock_guard lock(m);
+        _logFile << '#' << ++_lines << ' ' <<  msg << '\n';
         _logFile.flush();
     }
 }

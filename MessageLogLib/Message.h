@@ -19,17 +19,17 @@ public:
     Message() = default;
     ~Message() = default;
 
-    std::string getData() const;
-    time_t getCreationTime() const;
-    Importance getImportance() const;
+    std::string getData() const noexcept;
+    time_t getCreationTime() const noexcept;
+    Importance getImportance() const noexcept;
 
-    void setData(const std::string newData);
-    void setImportance(const Importance newImportance);
-    void setCurrentTime();
+    void setData(const std::string newData) noexcept;
+    void setImportance(const Importance newImportance) noexcept;
+    void setCurrentTime() noexcept;
 };
 
 std::ostream& operator<<(std::ostream& os, const Message &msg);
-Importance stringToImportance(const char *str);
+Importance stringToImportance(const std::string_view& str);
 std::string importanceToString(const Importance& imp);
 
 #endif // MESSAGE_H

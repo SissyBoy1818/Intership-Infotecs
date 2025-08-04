@@ -7,11 +7,11 @@ Journal::Journal(const std::string fileName, const Importance importanceByDefaul
 		throw std::invalid_argument("Cannot open file " + fileName);
 }
 
-std::fstream &Journal::getFileStream() {
+std::fstream &Journal::getFileStream() noexcept{
 	return _logFile;
 }
 
-void Journal::setDefaultImportance(const Importance newDefaultImportance) {
+void Journal::setDefaultImportance(const Importance newDefaultImportance) noexcept{
 	_importanceByDefault = newDefaultImportance;
 }
 

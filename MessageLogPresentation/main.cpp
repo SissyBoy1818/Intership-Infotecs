@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 
 	Importance imp;
 	try {
-		imp = stringToImportance(argv[2]);
+		imp = stringToImportance(std::string_view(argv[2]));
 	} catch(const std::invalid_argument& e) {
 		std::cerr << e.what() << '\n';
 		return 1;

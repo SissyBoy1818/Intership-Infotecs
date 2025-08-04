@@ -6,27 +6,27 @@ Message::Message(std::string data, Importance importance)
     time(&_creationTime);
 }
 
-std::string Message::getData() const{
+std::string Message::getData() const noexcept{
     return _data;
 }
 
-time_t Message::getCreationTime() const{
+time_t Message::getCreationTime() const noexcept{
     return _creationTime;
 }
 
-Importance Message::getImportance() const{
+Importance Message::getImportance() const noexcept{
     return _importance;
 }
 
-void Message::setData(const std::string newData) {
+void Message::setData(const std::string newData) noexcept{
     _data = newData;
 }
 
-void Message::setImportance(const Importance newImportance) {
+void Message::setImportance(const Importance newImportance) noexcept{
     _importance = newImportance;
 }
 
-void Message::setCurrentTime() {
+void Message::setCurrentTime() noexcept{
     time(&_creationTime);
 }
 
@@ -43,12 +43,12 @@ std::ostream &operator<<(std::ostream &os, const Message &msg)
     return os;
 }
 
-Importance stringToImportance(const char *str)
+Importance stringToImportance(const std::string_view& str)
 {
-    if (strcmp(str,"low")==0) return Importance::Low;
-    if (strcmp(str,"medium")==0) return Importance::Medium;
-    if (strcmp(str,"high")==0) return Importance::High;
-    if (strlen(str)==0) return Importance::Default;
+    if (str == "low") return Importance::Low;
+    if (str == "medium") return Importance::Medium;
+    if (str == "high") return Importance::High;
+    if (str.empty()) return Importance::Default;
     throw std::invalid_argument("Unkown importance: " + std::string(str));
 }
 

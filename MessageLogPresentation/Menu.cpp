@@ -2,8 +2,11 @@
 
 Menu::Menu(Journal &journal) 
 	: _journal(journal), _lastMessage(nullptr), _sendingThread([&]{sendMessage();}), _running(true)
+{}
+
+Menu::~Menu()
 {
-	_sendingThread.detach();
+	_sendingThread.join();
 }
 
 void Menu::printMenu() const
@@ -95,11 +98,17 @@ void Menu::showStatistic()
 	while(!_journal.getFileStream().eof())
 	{
 		std::string tmp;
-		_journal.getFileStream().seekg(24, _journal.getFileStream().cur);
+		_journal.getFileStream().seekg(21, _journal.getFileStream().cur);
 		_journal.getFileStream() >> tmp;
 		tmp.pop_back();
-		if (counter.count(stringToImportance(tmp.c_str())))
-			counter[stringToImportance(tmp.c_str())]++;
+
+		try {
+			if (counter.count(stringToImportance(tmp.c_str())))
+				counter[stringToImportance(tmp.c_str())]++;	
+		} catch(const std::exception& e) {
+			std::cerr << e.what() << '\n';
+		}
+		
 		std::getline(_journal.getFileStream(), tmp);
 	}
 

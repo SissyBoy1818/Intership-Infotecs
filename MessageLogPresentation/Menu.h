@@ -28,7 +28,7 @@ private:
 
 public:
     Menu(Journal &journal);
-    ~Menu() = default;
+    ~Menu();
 
     void printMenu() const; // Вывод меню в консоль
     bool handleControllers(); // Получение пользовательского ввода для выбора пункта меню  

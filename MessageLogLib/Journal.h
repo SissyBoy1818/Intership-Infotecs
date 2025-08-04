@@ -5,7 +5,7 @@
 #include <mutex>
 #include <algorithm>
 #include <vector>
-#include "Message.h"
+#include "Message.h"    
 
 class Journal
 {
@@ -18,8 +18,8 @@ public:
     Journal(const std::string fileName, const Importance importanceByDefault);
     ~Journal() = default;
     
-    std::fstream& getFileStream();
-    void setDefaultImportance(const Importance newDefaultImportance); // Изменить уровень важности сообщения по умолчанию
+    std::fstream& getFileStream() noexcept;
+    void setDefaultImportance(const Importance newDefaultImportance) noexcept; // Изменить уровень важности сообщения по умолчанию
     void addLogEntry(Message &msg); // Записать новое сообщение в журнал
 };
 
